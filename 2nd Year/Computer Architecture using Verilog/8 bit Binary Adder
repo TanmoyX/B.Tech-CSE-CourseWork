@@ -1,0 +1,32 @@
+module main(
+    input [7:0] a,
+	input [7:0] b,
+	input [7:0] cin,
+	output [7:0] add,
+	output cout
+);
+assign {cout,add} = a+b+cin;
+endmodule
+
+module mainsim;
+    reg [7:0] a;
+    reg [7:0] b;
+    reg [7:0] cin;
+    wire [7:0] add;
+    wire cout;
+    main uut(
+    	.a(a),
+    	.b(b),
+    	.cin(cin),
+    	.add(add),
+    	.cout(cout)
+    );
+    integer i;
+    initial begin
+        a = 8'b 10000000;
+        b = 8'b 00000111;
+        cin = 8'b 10000001;
+    end
+    initial
+        $monitor("a = %b, b = %b, cin = %b, add = %b, cout = %b", a, b, cin, add, cout);
+endmodule
