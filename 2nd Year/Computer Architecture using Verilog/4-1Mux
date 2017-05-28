@@ -1,0 +1,41 @@
+module main(
+    input [1:0] select,
+	input [3:0] d,
+	output reg q
+);
+always @ (select or d)
+    begin
+    case(select)
+        0: q = d[0];
+        1: q = d[1];
+        2: q = d[2];
+        3: q = d[3];
+    endcase
+    end	
+endmodule
+
+module mainsim;
+    reg [1:0] select;
+    reg [3:0] d;
+    wire q;
+    main uut(
+    	.select(select),
+    	.d(d),
+    	.q(q)
+    );
+    initial begin
+        select = 2'b 00;
+        d = 4'b 1011;
+        #100
+        select = 2'b 01;
+        d = 4'b 1011;
+        #100
+        select = 2'b 10;
+        d = 4'b 1011;
+        #100
+        select = 2'b 11;
+        d = 4'b 1011;
+    end
+    initial
+        $monitor("select = %b, d = %b, q = %d", select, d, q);
+endmodule
