@@ -1,0 +1,48 @@
+module jdoodle(
+    input clk,
+    input reset,
+    input d,
+    output reg q
+    );
+    
+    always @ (posedge clk)
+    begin
+        if (reset)
+            q <= 1'b 0;
+        else
+            q <= d;
+    end
+endmodule
+
+module jdoodlesim;
+reg clk;
+reg reset;
+reg d;
+wire q;
+jdoodle uut(
+    .clk(clk),
+    .reset(reset),
+    .d(d),
+    .q(q)
+);
+
+initial begin
+    clk = 0;
+    reset = 0;
+    d = 1;
+    #100;
+    clk = 1;
+    reset = 1;
+    #100;
+    clk = 0;
+    #100
+    clk = 1;
+    d = 1;
+    #100
+    clk = 0;
+    d = 0;
+end
+
+initial 
+    $monitor ("clk = %b, reset = %b, D = %b, Q = %b", clk, reset, d, q);
+endmodule
