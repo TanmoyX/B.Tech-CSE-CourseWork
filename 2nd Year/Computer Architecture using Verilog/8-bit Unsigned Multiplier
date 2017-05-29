@@ -1,0 +1,27 @@
+module jdoodle(
+    input [7:0] a,
+    input [7:0] b,
+    output [15:0] c
+    );
+    assign c = a*b;
+endmodule
+
+module jdoodlesim;
+reg [7:0] a;
+reg [7:0] b;
+wire [15:0] c;
+jdoodle uut(
+    .a(a),
+    .b(b),
+    .c(c)
+);
+
+initial begin
+    a = 8'b 00001011;
+    b = 8'b 00000101;
+    #100;
+end
+
+initial 
+    $monitor ("a = %b, b = %b, c = %b", a, b, c);
+endmodule  
