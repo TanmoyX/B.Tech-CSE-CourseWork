@@ -1,0 +1,63 @@
+module jdoodle(
+    input clk,
+    input en,
+    input wr,
+    input [3:0] di,
+    input [4:0] addr,
+    output reg [3:0] dout
+    );
+    reg [31:0] RAM;
+    always @ (clk) 
+    begin
+        if (en) begin
+            if (wr)
+                begin
+                    RAM[addr] <= di;
+                end
+                    dout <= RAM[addr];
+        end
+    end
+endmodule
+
+module jdoodlesim;
+reg clk;
+reg en;
+reg wr;
+reg [3:0] di;
+reg [4:0] addr;
+wire [3:0] dout;
+
+jdoodle uut(
+    .clk(clk),
+    .en(en),
+    .wr(wr),
+    .di(di),
+    .addr(addr),
+    .dout(dout)
+);
+
+initial begin
+    clk = 1;
+    en = 1;
+    wr = 1;
+    di = 4'b 0101;
+    addr = 5'b 00001;
+    #100
+    clk = 0;
+    di = 4'b 1110;
+    addr = 5'b 00010;
+    #100
+    clk = 1;
+    wr = 0;
+    addr = 5'b 00000;
+    #100
+    clk = 0;
+    addr = 5'b 00001;
+    #100
+    clk = 1;
+    addr = 5'b 00010;
+end
+
+initial 
+    $monitor ("clock = %d, enable = %d, address = %b, dout = %b", clk, en, addr, di);
+endmodule   
