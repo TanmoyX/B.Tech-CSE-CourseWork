@@ -1,0 +1,48 @@
+module jdoodle(
+    input clk,
+    input en,
+    input [3:0] addr,
+    output reg [3:0] data
+    );
+    always @ (clk)
+    begin
+        if (en)
+            begin
+                case(addr)
+                    4'b 0000: data <= 4'b 0010;
+                    4'b 0001: data <= 4'b 1100;
+                    4'b 0010: data <= 4'b 1111;
+                    4'b 0011: data <= 4'b 0000;
+                endcase
+            end
+    end
+endmodule
+
+module jdoodlesim;
+reg clk;
+reg en;
+reg [3:0] addr;
+wire [3:0] data;
+
+jdoodle uut(
+    .clk(clk),
+    .en(en),
+    .addr(addr),
+    .data(data)
+);
+
+initial begin
+    clk = 0;
+    en = 1;
+    addr = 4'b 0000;
+    #100
+    clk = 1;
+    addr = 4'b 0001;
+    #100
+    clk = 0;
+    addr = 4'b 0010;
+end
+
+initial 
+    $monitor ("clock = %b, enable = %b, address = %b, data = %b", clk, en, addr, data);
+endmodule
