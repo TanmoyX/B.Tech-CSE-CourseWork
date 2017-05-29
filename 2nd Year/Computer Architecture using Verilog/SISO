@@ -1,0 +1,55 @@
+module jdoodle(
+    input clk,
+    input si,
+    output reg so
+    );
+    
+    reg [7:0] tmp;
+    initial begin
+        tmp = 8'b 1100011;
+    end
+    always @ (clk)
+    begin
+        tmp <= tmp << 1;
+        tmp[0] <= si;
+        so <= tmp[7];
+    end
+endmodule
+
+module jdoodlesim;
+reg clk;
+reg si;
+wire so;
+jdoodle uut(
+    .clk(clk),
+    .si(si),
+    .so(so)
+);
+
+initial begin
+    clk = 0;
+    si = 0;
+    #100;
+    clk = 1;
+    si = 1;
+    #100;
+    clk = 0;
+    #100
+    clk = 1;
+    si = 0;
+    #100
+    clk = 0;
+    #100
+    clk = 1;
+    #100
+    clk = 0;
+    #100
+    clk = 1;
+    si = 1;
+    #100
+    clk = 0;
+end
+
+initial 
+    $monitor ("clk = %d, si = %d, so = %d", clk, si, so);
+endmodule 
