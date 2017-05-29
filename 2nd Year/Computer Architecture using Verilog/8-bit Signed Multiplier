@@ -1,0 +1,44 @@
+module jdoodle(
+    input [7:0] x,
+    input [7:0] y,
+    output [32:0] p
+    );
+    reg [8:0] a;
+    reg [32:0] p = 0;
+    integer i;
+    always @ (x,y)
+    begin
+        p = 0;
+        a = x;
+        for (i = 0; i < 8; i=i+1)
+        begin
+            if (y[i] == 1)
+            begin
+                p  = p + a;
+                a = a << 1;
+            end
+            else
+                a = a << 1;
+        end
+    end
+endmodule
+
+module jdoodlesim;
+reg [7:0] x;
+reg [7:0] y;
+wire [32:0] p;
+jdoodle uut(
+    .x(x),
+    .y(y),
+    .p(p)
+);
+
+initial begin
+    x = 40;
+    y = 5;
+    #100;
+end
+
+initial 
+    $monitor ("a = %d, b = %d, c = %d", x, y, p);
+endmodule 
