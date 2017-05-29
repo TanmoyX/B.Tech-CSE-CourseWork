@@ -6,7 +6,7 @@ module jdoodle(
     
     reg [7:0] tmp;
     initial begin
-        tmp = 8'b 1100011;
+        tmp = 8'b 11000011;
     end
     always @ (clk)
     begin
@@ -51,5 +51,5 @@ initial begin
 end
 
 initial 
-    $monitor ("clk = %d, si = %d, so = %d", clk, si, so);
-endmodule 
+    $monitor ("clk = %b, si = %b, so = %b", clk, si, so);
+endmodule   
